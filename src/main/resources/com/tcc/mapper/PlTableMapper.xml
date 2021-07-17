@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.mapper.PlTableMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.pojo.PlTable" >
+    <id column="pl_id" property="plId" jdbcType="INTEGER" />
+    <result column="pl_parking" property="plParking" jdbcType="VARCHAR" />
+    <result column="pl_state" property="plState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pl_id, pl_parking, pl_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tcc.pojo.PlTableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pl_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pl_table
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pl_table
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcc.pojo.PlTableExample" >
+    delete from pl_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcc.pojo.PlTable" >
+    insert into pl_table (pl_id, pl_parking, pl_state
+      )
+    values (#{plId,jdbcType=INTEGER}, #{plParking,jdbcType=VARCHAR}, #{plState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.pojo.PlTable" >
+    insert into pl_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="plId != null" >
+        pl_id,
+      </if>
+      <if test="plParking != null" >
+        pl_parking,
+      </if>
+      <if test="plState != null" >
+        pl_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="plId != null" >
+        #{plId,jdbcType=INTEGER},
+      </if>
+      <if test="plParking != null" >
+        #{plParking,jdbcType=VARCHAR},
+      </if>
+      <if test="plState != null" >
+        #{plState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcc.pojo.PlTableExample" resultType="java.lang.Integer" >
+    select count(*) from pl_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pl_table
+    <set >
+      <if test="record.plId != null" >
+        pl_id = #{record.plId,jdbcType=INTEGER},
+      </if>
+      <if test="record.plParking != null" >
+        pl_parking = #{record.plParking,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plState != null" >
+        pl_state = #{record.plState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pl_table
+    set pl_id = #{record.plId,jdbcType=INTEGER},
+      pl_parking = #{record.plParking,jdbcType=VARCHAR},
+      pl_state = #{record.plState,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.pojo.PlTable" >
+    update pl_table
+    <set >
+      <if test="plParking != null" >
+        pl_parking = #{plParking,jdbcType=VARCHAR},
+      </if>
+      <if test="plState != null" >
+        pl_state = #{plState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.pojo.PlTable" >
+    update pl_table
+    set pl_parking = #{plParking,jdbcType=VARCHAR},
+      pl_state = #{plState,jdbcType=VARCHAR}
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </update>
+</mapper>

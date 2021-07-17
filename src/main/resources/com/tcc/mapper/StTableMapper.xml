@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.mapper.StTableMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.pojo.StTable" >
+    <id column="st_id" property="stId" jdbcType="INTEGER" />
+    <result column="st_sf" property="stSf" jdbcType="INTEGER" />
+    <result column="st_bt" property="stBt" jdbcType="INTEGER" />
+    <result column="st_year" property="stYear" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    st_id, st_sf, st_bt, st_year
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tcc.pojo.StTableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from st_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from st_table
+    where st_id = #{stId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from st_table
+    where st_id = #{stId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcc.pojo.StTableExample" >
+    delete from st_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcc.pojo.StTable" >
+    insert into st_table (st_id, st_sf, st_bt, 
+      st_year)
+    values (#{stId,jdbcType=INTEGER}, #{stSf,jdbcType=INTEGER}, #{stBt,jdbcType=INTEGER}, 
+      #{stYear,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.pojo.StTable" >
+    insert into st_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stId != null" >
+        st_id,
+      </if>
+      <if test="stSf != null" >
+        st_sf,
+      </if>
+      <if test="stBt != null" >
+        st_bt,
+      </if>
+      <if test="stYear != null" >
+        st_year,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stId != null" >
+        #{stId,jdbcType=INTEGER},
+      </if>
+      <if test="stSf != null" >
+        #{stSf,jdbcType=INTEGER},
+      </if>
+      <if test="stBt != null" >
+        #{stBt,jdbcType=INTEGER},
+      </if>
+      <if test="stYear != null" >
+        #{stYear,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcc.pojo.StTableExample" resultType="java.lang.Integer" >
+    select count(*) from st_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update st_table
+    <set >
+      <if test="record.stId != null" >
+        st_id = #{record.stId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stSf != null" >
+        st_sf = #{record.stSf,jdbcType=INTEGER},
+      </if>
+      <if test="record.stBt != null" >
+        st_bt = #{record.stBt,jdbcType=INTEGER},
+      </if>
+      <if test="record.stYear != null" >
+        st_year = #{record.stYear,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update st_table
+    set st_id = #{record.stId,jdbcType=INTEGER},
+      st_sf = #{record.stSf,jdbcType=INTEGER},
+      st_bt = #{record.stBt,jdbcType=INTEGER},
+      st_year = #{record.stYear,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.pojo.StTable" >
+    update st_table
+    <set >
+      <if test="stSf != null" >
+        st_sf = #{stSf,jdbcType=INTEGER},
+      </if>
+      <if test="stBt != null" >
+        st_bt = #{stBt,jdbcType=INTEGER},
+      </if>
+      <if test="stYear != null" >
+        st_year = #{stYear,jdbcType=INTEGER},
+      </if>
+    </set>
+    where st_id = #{stId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.pojo.StTable" >
+    update st_table
+    set st_sf = #{stSf,jdbcType=INTEGER},
+      st_bt = #{stBt,jdbcType=INTEGER},
+      st_year = #{stYear,jdbcType=INTEGER}
+    where st_id = #{stId,jdbcType=INTEGER}
+  </update>
+</mapper>

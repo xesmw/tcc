@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.mapper.CarTableMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.pojo.CarTable" >
+    <id column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+    <result column="car_pl" property="carPl" jdbcType="VARCHAR" />
+    <result column="car_utime" property="carUtime" jdbcType="VARCHAR" />
+    <result column="car_otime" property="carOtime" jdbcType="VARCHAR" />
+    <result column="car_money" property="carMoney" jdbcType="VARCHAR" />
+    <result column="car_state" property="carState" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    car_id, car_brand, car_pl, car_utime, car_otime, car_money, car_state, car_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tcc.pojo.CarTableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from car_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from car_table
+    where car_id = #{carId,jdbcType=INTEGER}
+  </select>
+  <select id="selectSum" parameterType="com.tcc.pojo.YearTableExample" resultType="java.lang.Integer" >
+    select SUM(car_Money)
+    from car_table
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from car_table
+    where car_id = #{carId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tcc.pojo.CarTableExample" >
+    delete from car_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tcc.pojo.CarTable" >
+    insert into car_table (car_id, car_brand, car_pl, 
+      car_utime, car_otime, car_money, 
+      car_state, car_type)
+    values (#{carId,jdbcType=INTEGER}, #{carBrand,jdbcType=VARCHAR}, #{carPl,jdbcType=VARCHAR}, 
+      #{carUtime,jdbcType=VARCHAR}, #{carOtime,jdbcType=VARCHAR}, #{carMoney,jdbcType=VARCHAR}, 
+      #{carState,jdbcType=VARCHAR}, #{carType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.pojo.CarTable" >
+    insert into car_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="carBrand != null" >
+        car_brand,
+      </if>
+      <if test="carPl != null" >
+        car_pl,
+      </if>
+      <if test="carUtime != null" >
+        car_utime,
+      </if>
+      <if test="carOtime != null" >
+        car_otime,
+      </if>
+      <if test="carMoney != null" >
+        car_money,
+      </if>
+      <if test="carState != null" >
+        car_state,
+      </if>
+      <if test="carType != null" >
+        car_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="carBrand != null" >
+        #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="carPl != null" >
+        #{carPl,jdbcType=VARCHAR},
+      </if>
+      <if test="carUtime != null" >
+        #{carUtime,jdbcType=VARCHAR},
+      </if>
+      <if test="carOtime != null" >
+        #{carOtime,jdbcType=VARCHAR},
+      </if>
+      <if test="carMoney != null" >
+        #{carMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="carState != null" >
+        #{carState,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        #{carType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tcc.pojo.CarTableExample" resultType="java.lang.Integer" >
+    select count(*) from car_table
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update car_table
+    <set >
+      <if test="record.carId != null" >
+        car_id = #{record.carId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carBrand != null" >
+        car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carPl != null" >
+        car_pl = #{record.carPl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carUtime != null" >
+        car_utime = #{record.carUtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carOtime != null" >
+        car_otime = #{record.carOtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carMoney != null" >
+        car_money = #{record.carMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carState != null" >
+        car_state = #{record.carState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carType != null" >
+        car_type = #{record.carType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update car_table
+    set car_id = #{record.carId,jdbcType=INTEGER},
+      car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      car_pl = #{record.carPl,jdbcType=VARCHAR},
+      car_utime = #{record.carUtime,jdbcType=VARCHAR},
+      car_otime = #{record.carOtime,jdbcType=VARCHAR},
+      car_money = #{record.carMoney,jdbcType=VARCHAR},
+      car_state = #{record.carState,jdbcType=VARCHAR},
+      car_type = #{record.carType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.pojo.CarTable" >
+    update car_table
+    <set >
+      <if test="carBrand != null" >
+        car_brand = #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="carPl != null" >
+        car_pl = #{carPl,jdbcType=VARCHAR},
+      </if>
+      <if test="carUtime != null" >
+        car_utime = #{carUtime,jdbcType=VARCHAR},
+      </if>
+      <if test="carOtime != null" >
+        car_otime = #{carOtime,jdbcType=VARCHAR},
+      </if>
+      <if test="carMoney != null" >
+        car_money = #{carMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="carState != null" >
+        car_state = #{carState,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where car_id = #{carId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.pojo.CarTable" >
+    update car_table
+    set car_brand = #{carBrand,jdbcType=VARCHAR},
+      car_pl = #{carPl,jdbcType=VARCHAR},
+      car_utime = #{carUtime,jdbcType=VARCHAR},
+      car_otime = #{carOtime,jdbcType=VARCHAR},
+      car_money = #{carMoney,jdbcType=VARCHAR},
+      car_state = #{carState,jdbcType=VARCHAR},
+      car_type = #{carType,jdbcType=VARCHAR}
+    where car_id = #{carId,jdbcType=INTEGER}
+  </update>
+</mapper>
